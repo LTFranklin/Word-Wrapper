@@ -17,8 +17,11 @@ namespace PageComposition {
 
     static void Main(String[] args) {
       try {  // do not remove this try-catch statement, do not add any code outside try-block
+        //Reads in from the file
         PageInput pageInput = PageInputXml.LoadInput("input.xml");
+        //does the work
         Page page = pageInput.Compose();
+        //Outputs to file
         page.ToFile("page.txt");
       }
       catch (Exception e) {

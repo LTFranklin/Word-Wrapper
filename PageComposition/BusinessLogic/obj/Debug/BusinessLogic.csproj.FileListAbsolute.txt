@@ -1,0 +1,5 @@
+X:\Users\Nargacuga\Documents\Visual Studio 2017\Projects\PageComposition\BusinessLogic\bin\Debug\BusinessLogic.dll
+X:\Users\Nargacuga\Documents\Visual Studio 2017\Projects\PageComposition\BusinessLogic\bin\Debug\BusinessLogic.pdb
+X:\Users\Nargacuga\Documents\Visual Studio 2017\Projects\PageComposition\BusinessLogic\obj\Debug\BusinessLogic.csprojResolveAssemblyReference.cache
+X:\Users\Nargacuga\Documents\Visual Studio 2017\Projects\PageComposition\BusinessLogic\obj\Debug\BusinessLogic.dll
+X:\Users\Nargacuga\Documents\Visual Studio 2017\Projects\PageComposition\BusinessLogic\obj\Debug\BusinessLogic.pdb

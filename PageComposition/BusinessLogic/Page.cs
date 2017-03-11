@@ -15,13 +15,16 @@ namespace BusinessLogic {
     internal abstract bool Overflow();
 
     internal void Add(List<String> words) {
+      //adds each word to the page
       foreach (String w in words) {
         this.Add(w);
       }
     }
 
     internal void Add(String word) {
+      //if the word could not be added to the current line
       if (!currentLine.Add(word)) {
+        //create a new line and add the word to it
         AddLine();
         Add(word);
       }
@@ -30,6 +33,7 @@ namespace BusinessLogic {
     internal abstract void AddLine();
 
     internal void IntoText(StringBuilder text) {
+      //adds a new line at the end of every line
       foreach (Line line in content) {
         line.IntoText(text);
         text.Append("\n");
@@ -38,6 +42,7 @@ namespace BusinessLogic {
 
     public void ToFile(String fileName) {
       StringBuilder outText = new StringBuilder();
+      //formats the extra parts (spaces and /n)
       IntoText(outText);
       try {
         using (StreamWriter sw = new StreamWriter(fileName)) {

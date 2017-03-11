@@ -32,10 +32,13 @@ namespace BusinessLogic {
       this.words = words;
     }
 
+    //finds which format is specified
     public Page Compose() {
       switch (format) {
         case Format.Fill: {
+            //creates a new page
             FillPage page = new FillPage(wrap);
+            //adds the words onto the page
             page.Add(words);
             return page;
           }

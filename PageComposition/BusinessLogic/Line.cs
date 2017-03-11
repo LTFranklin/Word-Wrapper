@@ -20,11 +20,15 @@ namespace BusinessLogic {
     internal abstract bool Overflow();
 
     internal bool Add(String word) {
+      //adds the word to the page
       content.Add(word);
+      //if the line length is not too big
       if (!Overflow()) {
+        //its fine
         return true;
       }
       else {  
+        //remove the word and return that it was a problem
         content.RemoveAt(content.Count - 1);
         return false;
       }

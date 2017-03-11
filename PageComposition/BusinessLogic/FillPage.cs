@@ -10,13 +10,18 @@ namespace BusinessLogic {
     internal int wrap;
 
     internal FillPage(int wrap) {
+      //sets the wrap length
       this.wrap = wrap;
+      //creates a list of lines for the page
       content = new List<Line>();
+      //and adds one to be used
       AddLine();
     }
 
     internal override void AddLine() {
+      //creates a new line
       currentLine = new FillLine(this);
+      //adds the content on the current line to it (should be empty?)
       content.Add(currentLine);
     }
 

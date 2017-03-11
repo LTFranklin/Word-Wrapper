@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <pageinput>
   <format>Fill</format>
-  <wrap>5</wrap>
+  <wrap>7</wrap>
   <wrapsoft>0</wrapsoft>
   <columnmoment>0</columnmoment>
   <words>abcde abcde</words>
