@@ -1,7 +1,0 @@
-X:\Users\Nargacuga\Documents\Visual Studio 2017\Projects\PageComposition\IO\bin\Debug\IO.dll
-X:\Users\Nargacuga\Documents\Visual Studio 2017\Projects\PageComposition\IO\bin\Debug\IO.pdb
-X:\Users\Nargacuga\Documents\Visual Studio 2017\Projects\PageComposition\IO\bin\Debug\BusinessLogic.dll
-X:\Users\Nargacuga\Documents\Visual Studio 2017\Projects\PageComposition\IO\bin\Debug\BusinessLogic.pdb
-X:\Users\Nargacuga\Documents\Visual Studio 2017\Projects\PageComposition\IO\obj\Debug\IO.csprojResolveAssemblyReference.cache
-X:\Users\Nargacuga\Documents\Visual Studio 2017\Projects\PageComposition\IO\obj\Debug\IO.dll
-X:\Users\Nargacuga\Documents\Visual Studio 2017\Projects\PageComposition\IO\obj\Debug\IO.pdb
