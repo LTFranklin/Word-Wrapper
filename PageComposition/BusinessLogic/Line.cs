@@ -40,6 +40,8 @@ namespace BusinessLogic
             }
         }
 
+        internal abstract string SoftFill(string word);
+
         internal abstract void IntoText(StringBuilder text);
 
         public override String ToString()

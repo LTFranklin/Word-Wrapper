@@ -39,6 +39,25 @@ namespace BusinessLogic {
             }
         }
 
+        //used to reorganise the string according to the soft wrap
+        internal override string SoftFill(string word)
+        {
+            //inserts any word that overfilled the last line
+            if (word != null)
+            {
+                content.Insert(0, word);
+            }
+            //checks if the length is longer then the softwrap
+            if (Length() > ((FillPage)page).wrapSoft)
+            {
+                //if so it returns the last item in the list
+                string overfill = content.Last();
+                content.Remove(content.Last());
+                return overfill;
+            }
+            return null;
+        }
+
         internal override void IntoText(StringBuilder text)
         {
             //adds a space after every word

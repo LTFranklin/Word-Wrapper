@@ -48,6 +48,10 @@ namespace BusinessLogic
             }
         }
 
+        internal abstract void reorganise();
+
+
+
         public void ToFile(String fileName)
         {
             StringBuilder outText = new StringBuilder();
