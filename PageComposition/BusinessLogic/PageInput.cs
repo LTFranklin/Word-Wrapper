@@ -48,16 +48,16 @@ namespace BusinessLogic
                 case Format.Fill:
                     {
                         //creates a new page
-                        FillPage page = new FillPage(wrap, wrapSoft);
+                        Page page = new Page(wrap, wrapSoft);
                         //adds the words onto the page
                         page.Add(words);
                         return page;
                     }
                 case Format.FillSoft:
                     {
-                        FillPage page = new FillPage(wrap, wrapSoft);
+                        Page page = new Page(wrap, wrapSoft);
                         page.Add(words);
-                        page.reorganise();
+                        page.SoftWrap();
                         return page;
                     }
                 default:

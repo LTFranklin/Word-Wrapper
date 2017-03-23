@@ -7,14 +7,24 @@ using System.IO;
 namespace BusinessLogic
 {
 
-    public abstract class Page
+    public class Page
     {
-
         internal List<Line> content;
-
         internal Line currentLine;
+        internal int wrap;
+        internal int wrapSoft;
 
-        internal abstract bool Overflow();
+        internal Page(int wrap, int wrapSoft)
+        {
+            //sets the wrap length
+            this.wrap = wrap;
+            //sets the softwrap length
+            this.wrapSoft = wrapSoft;
+            //creates a list of lines for the page
+            content = new List<Line>();
+            //and adds one to be used
+            AddLine();
+        }
 
         internal void Add(List<String> words)
         {
@@ -36,8 +46,6 @@ namespace BusinessLogic
             }
         }
 
-        internal abstract void AddLine();
-
         internal void IntoText(StringBuilder text)
         {
             //adds a new line at the end of every line (added \r)
@@ -47,10 +55,6 @@ namespace BusinessLogic
                 text.Append("\r\n");
             }
         }
-
-        internal abstract void reorganise();
-
-
 
         public void ToFile(String fileName)
         {
@@ -72,12 +76,72 @@ namespace BusinessLogic
             }
         }
 
+
+
+        internal void AddLine()
+        {
+            //creates a new line
+            currentLine = new Line(this);
+            //adds the content on the current line to it (should be empty?)
+            content.Add(currentLine);
+        }
+
+        internal void SoftWrap()
+        {
+            bool changes = true;
+            string word = null;
+            string overfill;
+            //if word ends as an empty string then no action was taken, thus everything is correctly positioned
+            do
+            {
+                changes = false;
+                word = null;
+                //counts what line the method is working on
+                int count = 0;
+                foreach (Line l in content)
+                {
+                    //if the count is >= half the total number of lines
+                    if (count > (content.Count() / 2))
+                    {
+                        //run the softfill method on that line, sending the last lines overfill with it
+                        overfill = l.SoftFill(word);
+                        //set the word to the lines overfill
+                        word = overfill;
+                        if(overfill != null)
+                        {
+                            changes = true;
+                        }
+                    }
+                    count++;
+                }
+                if (word != null)
+                {
+                    AddLine();
+                    Add(word);
+                }
+            }
+            while (changes);
+        }
+
+        internal bool Overflow()
+        {
+            foreach (Line line in content)
+            {
+                if (line.Overflow())
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public override String ToString()
         {
             StringBuilder outText = new StringBuilder();
             IntoText(outText);
             return outText.ToString();
         }
+
 
     }
 }
