@@ -48,7 +48,7 @@ namespace BusinessLogic
             //removes the last space on the line as it would be removed if it was the last character
             return result - 1;
         }
-        //remove this, its uneeded
+
         internal bool Overflow()
         {
             //if there is only 1 word on the line it is always okay

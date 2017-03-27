@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace BusinessLogic
 {
@@ -26,12 +27,97 @@ namespace BusinessLogic
             AddLine();
         }
 
+        //used to get actual words from the input
+        static internal List<string> FilterWords(List<string> rawWords)
+        {
+            List<string> words = new List<string>();
+            string wordTest = @"([aeiou])";
+            //adds each word to the page
+            foreach (String w in rawWords)
+            {
+                //if it contains a vowel
+                if (Regex.IsMatch(w, wordTest))
+                {
+                    char last = ' ';
+                    bool valid = false;
+                    //if the word is more then 3 chars and there is less then 2 vowels
+                    if (w.Length > 3 && Regex.Matches(w, wordTest).Count < 2)
+                    {
+                        //its not a word
+                        valid = false;
+                    }
+                    else
+                    {
+                        //for each vowel
+                        foreach (Match m in Regex.Matches(w, wordTest))
+                        {
+                            //store the vowel
+                            char[] c = m.Groups[0].ToString().ToCharArray();
+                            //and compare to the last vowel in the vowel (blank space is its the first vowel so it always passes)
+                            //If its in alphabetical order
+                            if ((int)c[0] > (int)last)
+                            {
+                                //set the vowel to the last variable for later comparisions
+                                last = c[0];
+                                //set the word to be valid
+                                valid = true;
+                            }
+                            //else the word is not valid as the vowels arent alphabetical
+                            else
+                            {
+                                valid = false;
+                            }
+                        }
+                    }
+                    //if the word is valid add it to the page
+                    if (valid)
+                    {
+                        words.Add(w);
+                    }
+                }
+            }
+            return words;
+        }
+
+        //adds words in a normal wrap format
         internal void Add(List<String> words)
         {
-            //adds each word to the page
-            foreach (String w in words)
+            foreach (string s in words)
             {
-                this.Add(w);
+                this.Add(s);
+            }
+        }
+        //HOW THE HELL DO I KNOW IF THIS WORKS CORRECTLY?
+        //adds words for setwrap
+        internal void SetAdd(List<string> words)
+        {
+            //while words remain
+            while(words.Count != 0)
+            {
+                bool added = false;
+                //for each word
+                for (int i = 0; i < words.Count; i++)
+                {
+                    //if the word could be added to the line
+                    if(currentLine.Add(words[i]))
+                    {
+                        added = true;
+                        //remove it from the list
+                        words.Remove(words[i]);
+                        //if there is less then 3 sapces remaining
+                        if((wrap - currentLine.Length()) < 3)
+                        {
+                            //create a new line
+                            AddLine();
+                        }
+                    }
+                }
+                //if nothings been added to the line
+                if (!added)
+                {
+                    //create a new line
+                    AddLine();
+                }
             }
         }
 
@@ -75,8 +161,6 @@ namespace BusinessLogic
                 throw new Exception(message);
             }
         }
-
-
 
         internal void AddLine()
         {

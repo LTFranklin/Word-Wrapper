@@ -43,6 +43,7 @@ namespace BusinessLogic
         //finds which format is specified
         public Page Compose()
         {
+            words = Page.FilterWords(words);
             switch (format)
             {
                 case Format.Fill:
@@ -58,6 +59,12 @@ namespace BusinessLogic
                         Page page = new Page(wrap, wrapSoft);
                         page.Add(words);
                         page.SoftWrap();
+                        return page;
+                    }
+                case Format.FillSet:
+                    {
+                        Page page = new Page(wrap, wrapSoft);
+                        page.SetAdd(words);
                         return page;
                     }
                 default:
