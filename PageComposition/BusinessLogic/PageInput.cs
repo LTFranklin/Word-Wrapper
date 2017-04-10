@@ -61,6 +61,20 @@ namespace BusinessLogic
                         page.SoftWrap();
                         return page;
                     }
+                case Format.FillAdjust:
+                    {
+                        Page page = new Page(wrap, wrapSoft);
+                        page.Add(words);
+                        page.FillAdjust();
+                        return page;
+                    }
+                case Format.LineMoment:
+                    {
+                        Page page = new Page(wrap, wrapSoft);
+                        page.Add(words);
+                        page.LineMoment(columnMoment);
+                        return page;
+                    }
                 case Format.FillSet:
                     {
                         Page page = new Page(wrap, wrapSoft);

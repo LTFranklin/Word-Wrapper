@@ -104,7 +104,7 @@ namespace BusinessLogic
                         added = true;
                         //remove it from the list
                         words.Remove(words[i]);
-                        //if there is less then 3 sapces remaining
+                        //if there is less then 3 spaces remaining no words can fit on that line
                         if((wrap - currentLine.Length()) < 3)
                         {
                             //create a new line
@@ -205,6 +205,25 @@ namespace BusinessLogic
                 }
             }
             while (changes);
+        }
+
+        internal void FillAdjust()
+        {
+            foreach (Line l in content)
+            {
+                l.FillAdjust(wrap);
+            }
+        }
+
+        internal void LineMoment(int moment)
+        {
+            int[] arr = new int[20];
+            int counter = 0;
+            foreach(Line l in content)
+            {
+                arr[counter] = l.MomentAdjust(wrap, moment);
+                ++counter;
+            }
         }
 
         internal bool Overflow()
