@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pageinput>
+  <format>FillAdjust</format>
+  <wrap>20</wrap>
+  <wrapsoft>10</wrapsoft>
+  <columnmoment>15</columnmoment>
+  <words>FillSoft – The page should be formatted as in Fill, above, but in addition to the wrap column, there is a soft wrap column that is less than or equal to the wrap column.  A line containing two or more words may not have a length greater than the soft wrap column unless the position of the line on the page is less than or equal to half the number of lines on the page.</words>
+</pageinput>

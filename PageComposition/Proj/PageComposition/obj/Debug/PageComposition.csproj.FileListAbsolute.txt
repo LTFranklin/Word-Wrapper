@@ -1,0 +1,10 @@
+X:\Users\Nargacuga\Documents\Visual Studio 2017\Projects\PageComposition\PageComposition\bin\Debug\PageComposition.exe.config
+X:\Users\Nargacuga\Documents\Visual Studio 2017\Projects\PageComposition\PageComposition\bin\Debug\PageComposition.exe
+X:\Users\Nargacuga\Documents\Visual Studio 2017\Projects\PageComposition\PageComposition\bin\Debug\PageComposition.pdb
+X:\Users\Nargacuga\Documents\Visual Studio 2017\Projects\PageComposition\PageComposition\bin\Debug\BusinessLogic.dll
+X:\Users\Nargacuga\Documents\Visual Studio 2017\Projects\PageComposition\PageComposition\bin\Debug\IO.dll
+X:\Users\Nargacuga\Documents\Visual Studio 2017\Projects\PageComposition\PageComposition\bin\Debug\BusinessLogic.pdb
+X:\Users\Nargacuga\Documents\Visual Studio 2017\Projects\PageComposition\PageComposition\bin\Debug\IO.pdb
+X:\Users\Nargacuga\Documents\Visual Studio 2017\Projects\PageComposition\PageComposition\obj\Debug\PageComposition.csprojResolveAssemblyReference.cache
+X:\Users\Nargacuga\Documents\Visual Studio 2017\Projects\PageComposition\PageComposition\obj\Debug\PageComposition.exe
+X:\Users\Nargacuga\Documents\Visual Studio 2017\Projects\PageComposition\PageComposition\obj\Debug\PageComposition.pdb
