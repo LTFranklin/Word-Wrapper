@@ -31,17 +31,18 @@ namespace BusinessLogic
         static internal List<string> FilterWords(List<string> rawWords)
         {
             List<string> words = new List<string>();
-            string wordTest = @"([aeiou])";
+            string puncTest = @"([^a-z])";
+            string vowelTest = @"([aeiou])";
             //adds each word to the page
             foreach (String w in rawWords)
-            {
-                //if it contains a vowel
-                if (Regex.IsMatch(w, wordTest))
+            { 
+                //if it contains a vowel and no punctuation
+                if (!Regex.IsMatch(w, puncTest) && Regex.IsMatch(w, vowelTest))
                 {
                     char last = ' ';
                     bool valid = false;
                     //if the word is more then 3 chars and there is less then 2 vowels
-                    if (w.Length > 3 && Regex.Matches(w, wordTest).Count < 2)
+                    if (w.Length > 3 && Regex.Matches(w, vowelTest).Count < 2)
                     {
                         //its not a word
                         valid = false;
@@ -49,13 +50,13 @@ namespace BusinessLogic
                     else
                     {
                         //for each vowel
-                        foreach (Match m in Regex.Matches(w, wordTest))
+                        foreach (Match m in Regex.Matches(w, vowelTest))
                         {
                             //store the vowel
                             char[] c = m.Groups[0].ToString().ToCharArray();
                             //and compare to the last vowel in the vowel (blank space is its the first vowel so it always passes)
                             //If its in alphabetical order
-                            if ((int)c[0] > (int)last)
+                            if ((int)c[0] >= (int)last)
                             {
                                 //set the vowel to the last variable for later comparisions
                                 last = c[0];
@@ -66,6 +67,7 @@ namespace BusinessLogic
                             else
                             {
                                 valid = false;
+                                break;
                             }
                         }
                     }
@@ -138,7 +140,7 @@ namespace BusinessLogic
             foreach (Line line in content)
             {
                 line.IntoText(text);
-                text.Append("\r\n");
+                text.Append("\n");
             }
         }
 
