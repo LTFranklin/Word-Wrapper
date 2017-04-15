@@ -111,6 +111,7 @@ namespace BusinessLogic
                     //store the diference as the number of sapces needing to be added
                     int spaceCount = wrap - length;
                     int last, highest, current, pos;
+                    string end = " ";
                     //while there is still spaces to be added
                     while (spaceCount != 0)
                     {
@@ -122,8 +123,7 @@ namespace BusinessLogic
                             int wordVowels = VowelCount(content[i]);
                             current += wordVowels;
                             //if the value isnt the first word, is higher then the current higest and there isnt a space between already
-                            //try making the ends with a variable that increase the numebr spaces in it each time
-                            if (last !=0 && current > highest && !content[i - 1].EndsWith(" "))
+                            if (last !=0 && current > highest && !content[i - 1].EndsWith(end))
                             {
                                 //track the position
                                 pos = i - 1;
@@ -132,6 +132,12 @@ namespace BusinessLogic
                             //remove the last value and strore the current value as last for the next word
                             current -= last;
                             last = wordVowels;
+                        }
+                        //if all words have an extra space between them add an extra space to the end criteria and restart the loop
+                        if(highest == 0)
+                        {
+                            end += " ";
+                            continue;
                         }
                         //add a space at the end of the tracked postion
                         content[pos] += " ";
@@ -155,7 +161,6 @@ namespace BusinessLogic
         }
 
         //doesnt need to return(remove before submission)
-        //assumes spaces should be equal where possible (check this is true)
         internal int MomentAdjust(int wrap, int mPos)
         {
             int moment = CalculateMoment(mPos);
@@ -163,22 +168,12 @@ namespace BusinessLogic
             {
                 int length = this.Length();
 
-                int pos = 0;
-
                 //if the moment is less then 0 and the length is shorter the the wrap 
                 while (moment < 0 && length < wrap)
                 {
-                    content[pos] += " ";
+                    //puts space between the first two words (cant think of where this wouldnt be the best option)
+                    content[0] += " ";
                     ++length;
-                    //increments the position if it is less then the line length and the moment position, else it resets it to the start of the line
-                    if (pos < content.Count() - 2 && pos < mPos)
-                    {
-                        ++pos;
-                    }
-                    else
-                    {
-                        pos = 0;
-                    }
                     moment = CalculateMoment(mPos);
                 }
             }
