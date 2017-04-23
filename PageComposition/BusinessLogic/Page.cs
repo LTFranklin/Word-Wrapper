@@ -13,14 +13,11 @@ namespace BusinessLogic
         internal List<Line> content;
         internal Line currentLine;
         internal int wrap;
-        internal int wrapSoft;
 
-        internal Page(int wrap, int wrapSoft)
+        internal Page(int wrap)
         {
             //sets the wrap length
             this.wrap = wrap;
-            //sets the softwrap length
-            this.wrapSoft = wrapSoft;
             //creates a list of lines for the page
             content = new List<Line>();
             //and adds one to be used
@@ -93,34 +90,81 @@ namespace BusinessLogic
         //adds words for setwrap
         internal void SetAdd(List<string> words)
         {
-            //while words remain
-            while(words.Count != 0)
+            int len = wrap;
+            while (words.Count() != 0)
             {
-                bool added = false;
-                //for each word
-                for (int i = 0; i < words.Count; i++)
+
+                bool b;
+                int start = 0;
+                do
+
                 {
-                    //if the word could be added to the line
-                    if(currentLine.Add(words[i]))
+                    words = Sort(words);
+                    b = cycle(words, len, start);
+                    ++start;
+                    if (start >= words.Count())
                     {
-                        added = true;
-                        //remove it from the list
-                        words.Remove(words[i]);
-                        //if there is less then 3 spaces remaining no words can fit on that line
-                        if((wrap - currentLine.Length()) < 3)
-                        {
-                            //create a new line
-                            AddLine();
-                        }
+                        start = 0;
+                        --len;
+                    }
+                } while (b == false);
+                AddLine();
+
+            }
+        }
+
+        internal bool cycle(List<string> l, int len, int start)
+        {
+            //
+            bool b = false;
+            int length = currentLine.Length();
+            if (length == len)
+            {
+                return true;
+            }
+            if (start != l.Count())
+            {
+
+                string x = l[start];
+                currentLine.setAdd(x);
+                l.Remove(x);
+                length = currentLine.Length();
+                if (length == len)
+                {
+                    return true;
+                }
+                else if (l.Count() == 0)
+                {
+                    currentLine.Remove(x);
+                    l.Add(x);
+                }
+                else if (length < len)
+                {
+                    b = cycle(l, len, start);
+                    if (!b && l.Count > 0)
+                    {
+                        currentLine.Remove(x);
+                        b = cycle(l, len, start);
+                        l.Add(x);
                     }
                 }
-                //if nothings been added to the line
-                if (!added)
+                else if (length > len)
                 {
-                    //create a new line
-                    AddLine();
+                    currentLine.Remove(x);
+                    b = cycle(l, len, start);
+                    l.Add(x);
                 }
+
             }
+            l = Sort(l);
+            return b;
+        }
+
+        internal List<string> Sort(List<string> input)
+        {
+            var res = input.OrderByDescending(x => x.Length);
+            List<string> output = res.ToList();
+            return output;
         }
 
         internal void Add(String word)
@@ -172,7 +216,7 @@ namespace BusinessLogic
             content.Add(currentLine);
         }
 
-        internal void SoftWrap()
+        internal void SoftWrap(int sWrap)
         {
             bool changes = true;
             string word = null;
@@ -187,10 +231,10 @@ namespace BusinessLogic
                 foreach (Line l in content)
                 {
                     //if the count is >= half the total number of lines
-                    if (count > (content.Count() / 2))
+                    if (count < (content.Count() / 2) || word != null || l.Length() > sWrap)
                     {
                         //run the softfill method on that line, sending the last lines overfill with it
-                        overfill = l.SoftFill(word);
+                        overfill = l.SoftFill(word, sWrap);
                         //set the word to the lines overfill
                         word = overfill;
                         if(overfill != null)

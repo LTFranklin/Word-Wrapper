@@ -64,7 +64,7 @@ namespace BusinessLogic
         }
 
         //used to reorganise the string according to the soft wrap
-        internal string SoftFill(string word)
+        internal string SoftFill(string word, int sWrap)
         {
             //inserts any word that overfilled the last line
             if (word != null)
@@ -72,11 +72,11 @@ namespace BusinessLogic
                 content.Insert(0, word);
             }
             //checks if the length is longer then the softwrap
-            if ((Length() > ((Page)page).wrapSoft) && content.Count != 1)
+            if ((Length() > sWrap) && content.Count != 1)
             {
                 //if so it returns the last item in the list
                 string overfill = content.Last();
-                content.Remove(content.Last());
+                content.RemoveAt(content.Count - 1);
                 return overfill;
             }
             return null;
@@ -218,7 +218,20 @@ namespace BusinessLogic
             return val;
         }
 
+        internal void Remove(string word)
+        {
+            content.Remove(word);
+        }
 
+        internal bool Contains(string word)
+        {
+            return content.Contains(word);
+        }
+
+        internal void setAdd(string word)
+        {
+            content.Add(word);
+        }
 
         public override String ToString()
         {

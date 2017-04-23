@@ -49,35 +49,35 @@ namespace BusinessLogic
                 case Format.Fill:
                     {
                         //creates a new page
-                        Page page = new Page(wrap, wrapSoft);
+                        Page page = new Page(wrap);
                         //adds the words onto the page
                         page.Add(words);
                         return page;
                     }
                 case Format.FillSoft:
                     {
-                        Page page = new Page(wrap, wrapSoft);
+                        Page page = new Page(wrap);
                         page.Add(words);
-                        page.SoftWrap();
+                        page.SoftWrap(wrapSoft);
                         return page;
                     }
                 case Format.FillAdjust:
                     {
-                        Page page = new Page(wrap, wrapSoft);
+                        Page page = new Page(wrap);
                         page.Add(words);
                         page.FillAdjust();
                         return page;
                     }
                 case Format.LineMoment:
                     {
-                        Page page = new Page(wrap, wrapSoft);
+                        Page page = new Page(wrap);
                         page.Add(words);
                         page.LineMoment(columnMoment);
                         return page;
                     }
                 case Format.FillSet:
                     {
-                        Page page = new Page(wrap, wrapSoft);
+                        Page page = new Page(wrap);
                         page.SetAdd(words);
                         return page;
                     }
