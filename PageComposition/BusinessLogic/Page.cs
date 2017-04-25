@@ -86,7 +86,38 @@ namespace BusinessLogic
                 this.Add(s);
             }
         }
-        //HOW THE HELL DO I KNOW IF THIS WORKS CORRECTLY?
+
+        internal void Add(String word)
+        {
+            //if the word could not be added to the current line
+            if (!currentLine.Add(word))
+            {
+                //create a new line and add the word to it
+                AddLine();
+                Add(word);
+            }
+        }
+
+        internal void AddLine()
+        {
+            //creates a new line
+            currentLine = new Line(this);
+            //adds the content on the current line to it (should be empty?)
+            content.Add(currentLine);
+        }
+
+        internal bool Overflow()
+        {
+            foreach (Line line in content)
+            {
+                if (line.Overflow())
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         //adds words for setwrap
         internal void SetAdd(List<string> words)
         {
@@ -113,7 +144,7 @@ namespace BusinessLogic
             }
         }
 
-        internal bool cycle(List<string> l, int len, int start)
+        private bool cycle(List<string> l, int len, int start)
         {
             //
             bool b = false;
@@ -160,60 +191,11 @@ namespace BusinessLogic
             return b;
         }
 
-        internal List<string> Sort(List<string> input)
+        private List<string> Sort(List<string> input)
         {
             var res = input.OrderByDescending(x => x.Length);
             List<string> output = res.ToList();
             return output;
-        }
-
-        internal void Add(String word)
-        {
-            //if the word could not be added to the current line
-            if (!currentLine.Add(word))
-            {
-                //create a new line and add the word to it
-                AddLine();
-                Add(word);
-            }
-        }
-
-        internal void IntoText(StringBuilder text)
-        {
-            //adds a new line at the end of every line (added \r)
-            foreach (Line line in content)
-            {
-                line.IntoText(text);
-                text.Append("\n");
-            }
-        }
-
-        public void ToFile(String fileName)
-        {
-            StringBuilder outText = new StringBuilder();
-            //formats the extra parts (spaces and \n)
-            IntoText(outText);
-            try
-            {
-                using (StreamWriter sw = new StreamWriter(fileName))
-                {
-                    sw.Write(outText.ToString());
-                }
-            }
-            catch (Exception e)
-            {
-                String message = "Failed to write output file: " + e.Message;
-                Console.WriteLine(message);
-                throw new Exception(message);
-            }
-        }
-
-        internal void AddLine()
-        {
-            //creates a new line
-            currentLine = new Line(this);
-            //adds the content on the current line to it (should be empty?)
-            content.Add(currentLine);
         }
 
         internal void SoftWrap(int sWrap)
@@ -263,25 +245,30 @@ namespace BusinessLogic
 
         internal void LineMoment(int moment)
         {
-            int[] arr = new int[20];
-            int counter = 0;
             foreach(Line l in content)
             {
-                arr[counter] = l.MomentAdjust(wrap, moment);
-                ++counter;
+                l.MomentAdjust(wrap, moment);
             }
         }
 
-        internal bool Overflow()
+        public void ToFile(String fileName)
         {
-            foreach (Line line in content)
+            StringBuilder outText = new StringBuilder();
+            //formats the extra parts (spaces and \n)
+            IntoText(outText);
+            try
             {
-                if (line.Overflow())
+                using (StreamWriter sw = new StreamWriter(fileName))
                 {
-                    return true;
+                    sw.Write(outText.ToString());
                 }
             }
-            return false;
+            catch (Exception e)
+            {
+                String message = "Failed to write output file: " + e.Message;
+                Console.WriteLine(message);
+                throw new Exception(message);
+            }
         }
 
         public override String ToString()
@@ -291,6 +278,14 @@ namespace BusinessLogic
             return outText.ToString();
         }
 
-
+        internal void IntoText(StringBuilder text)
+        {
+            //adds a new line at the end of every line (added \r)
+            foreach (Line line in content)
+            {
+                line.IntoText(text);
+                text.Append("\n");
+            }
+        }
     }
 }

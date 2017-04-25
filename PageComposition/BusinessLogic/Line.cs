@@ -63,6 +63,11 @@ namespace BusinessLogic
             }
         }
 
+        internal void setAdd(string word)
+        {
+            content.Add(word);
+        }
+
         //used to reorganise the string according to the soft wrap
         internal string SoftFill(string word, int sWrap)
         {
@@ -80,18 +85,6 @@ namespace BusinessLogic
                 return overfill;
             }
             return null;
-        }
-
-        internal void IntoText(StringBuilder text)
-        {
-            //adds a space after every word
-            foreach (String word in content)
-            {
-                text.Append(word.ToString());
-                text.Append(" ");
-            }
-            //removes the last space
-            text.Remove(text.Length - 1, 1);
         }
 
         //only works for single spaces
@@ -134,7 +127,7 @@ namespace BusinessLogic
                             last = wordVowels;
                         }
                         //if all words have an extra space between them add an extra space to the end criteria and restart the loop
-                        if(highest == 0)
+                        if (highest == 0)
                         {
                             end += " ";
                             continue;
@@ -160,36 +153,41 @@ namespace BusinessLogic
             return count;
         }
 
-        //doesnt need to return(remove before submission)
         internal int MomentAdjust(int wrap, int mPos)
         {
             int moment = CalculateMoment(mPos);
             if (content.Count != 1)
             {
                 int length = this.Length();
-
+                int i = 0;
                 //if the moment is less then 0 and the length is shorter the the wrap 
                 while (moment < 0 && length < wrap)
                 {
                     //puts space between the first two words (cant think of where this wouldnt be the best option)
-                    content[0] += " ";
+                    string temp = content[i];
+                    content[i] += " ";
                     ++length;
-                    moment = CalculateMoment(mPos);
+                    int adjMoment = CalculateMoment(mPos);
+                    if(Math.Abs(adjMoment) > Math.Abs(moment))
+                    {
+                        content[i] = temp;
+                        ++i;
+                    }
                 }
             }
             return moment;
         }
 
-        internal int CalculateMoment(int mPos)
+        private int CalculateMoment(int mPos)
         {
             int val = 0;
             //position of the word on the line
-            int wPos = 0;
+            int wPos = 1;
             foreach(string s in content)
             {
                 val += CalculateWordMoment(s, mPos, wPos);
                 //used to account for the standard spaces between words
-                if(wPos == 0)
+                if(wPos != content.Count)
                 {
                     ++wPos;
                 }
@@ -199,7 +197,7 @@ namespace BusinessLogic
             return val;
         }
 
-        internal int CalculateWordMoment(string word, int mPos, int wPos)
+        private int CalculateWordMoment(string word, int mPos, int wPos)
         {
             //moves all chars an array and sets them to upper case
             char[] inArr = word.ToUpper().ToCharArray();
@@ -228,16 +226,23 @@ namespace BusinessLogic
             return content.Contains(word);
         }
 
-        internal void setAdd(string word)
-        {
-            content.Add(word);
-        }
-
         public override String ToString()
         {
             StringBuilder text = new StringBuilder();
             this.IntoText(text);
             return text.ToString();
+        }
+
+        internal void IntoText(StringBuilder text)
+        {
+            //adds a space after every word
+            foreach (String word in content)
+            {
+                text.Append(word.ToString());
+                text.Append(" ");
+            }
+            //removes the last space
+            text.Remove(text.Length - 1, 1);
         }
     }
 }
